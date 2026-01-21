@@ -33,7 +33,7 @@ const AIChatBox = ({ contextData }) => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/roadmap/chat", {
+      const res = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

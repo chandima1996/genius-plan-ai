@@ -28,7 +28,7 @@ const QuizModal = ({ topic }) => {
     setShowResult(false);
 
     try {
-      const res = await fetch("http://localhost:8000/api/roadmap/quiz", {
+      const res = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic }),
@@ -70,7 +70,7 @@ const QuizModal = ({ topic }) => {
           variant="outline"
           size="sm"
           onClick={startQuiz}
-          className="gap-2 border-purple-500 text-purple-600 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/20"
+          className="gap-2 text-purple-600 border-purple-500 hover:bg-purple-50 dark:text-purple-400 dark:hover:bg-purple-900/20"
         >
           <BrainCircuit className="w-4 h-4" /> Take Quiz
         </Button>
@@ -84,7 +84,7 @@ const QuizModal = ({ topic }) => {
 
         {loading && (
           <div className="flex flex-col items-center py-10">
-            <Loader2 className="w-10 h-10 animate-spin text-purple-500 mb-4" />
+            <Loader2 className="w-10 h-10 mb-4 text-purple-500 animate-spin" />
             <p className="text-slate-500">Generating questions with AI...</p>
           </div>
         )}
@@ -119,12 +119,12 @@ const QuizModal = ({ topic }) => {
                   {opt}
                   {isAnswerChecked &&
                     i === questions[currentQ].correctAnswer && (
-                      <CheckCircle className="ml-auto w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4 ml-auto text-green-600" />
                     )}
                   {isAnswerChecked &&
                     i === selectedOption &&
                     i !== questions[currentQ].correctAnswer && (
-                      <XCircle className="ml-auto w-4 h-4 text-red-600" />
+                      <XCircle className="w-4 h-4 ml-auto text-red-600" />
                     )}
                 </Button>
               ))}
@@ -133,7 +133,7 @@ const QuizModal = ({ topic }) => {
         )}
 
         {!loading && showResult && (
-          <div className="text-center py-6 space-y-4">
+          <div className="py-6 space-y-4 text-center">
             <div className="text-5xl font-bold text-purple-600">
               {Math.round((score / questions.length) * 100)}%
             </div>
@@ -142,7 +142,7 @@ const QuizModal = ({ topic }) => {
             </p>
             <Button
               onClick={() => setIsOpen(false)}
-              className="bg-purple-600 hover:bg-purple-500 text-white w-full"
+              className="w-full text-white bg-purple-600 hover:bg-purple-500"
             >
               Close
             </Button>

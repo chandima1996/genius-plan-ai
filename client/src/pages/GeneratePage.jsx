@@ -31,7 +31,7 @@ const GeneratePage = () => {
     if (!roadmap?._id) return;
     setRoadmap((prev) => ({ ...prev, ...updatedContent }));
     try {
-      await fetch("http://localhost:8000/api/roadmap/update", {
+      await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -47,7 +47,7 @@ const GeneratePage = () => {
   const generateRoadmap = async (formData) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/roadmap/generate", {
+      const res = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -55,7 +55,7 @@ const GeneratePage = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      const saveRes = await fetch("http://localhost:8000/api/roadmap/save", {
+      const saveRes = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,9 +78,9 @@ const GeneratePage = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-10">
-      <div className="text-center mb-10 animate-in fade-in slide-in-from-bottom-5">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2">
+    <div className="w-full max-w-4xl px-4 py-10 mx-auto">
+      <div className="mb-10 text-center animate-in fade-in slide-in-from-bottom-5">
+        <h2 className="mb-2 text-3xl font-bold md:text-4xl text-slate-900 dark:text-white">
           {showForm ? "Generate New Roadmap" : "Your Learning Path"}
         </h2>
         {showForm && (
@@ -91,19 +91,19 @@ const GeneratePage = () => {
       </div>
 
       {showForm && (
-        <div className="animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <div className="duration-700 animate-in fade-in slide-in-from-bottom-5">
           <RoadmapForm onSubmit={generateRoadmap} isLoading={loading} />
         </div>
       )}
 
       {!showForm && roadmap && (
-        <div className="animate-in fade-in zoom-in-95 duration-500">
+        <div className="duration-500 animate-in fade-in zoom-in-95">
           <Button
             onClick={handleCreateNew}
             variant="ghost"
             className="mb-6 text-slate-500 hover:text-cyan-600 group"
           >
-            <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
             Create New
           </Button>
           <RoadmapDisplay data={roadmap} onUpdate={handleUpdateRoadmap} />

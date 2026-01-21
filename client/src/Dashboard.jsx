@@ -78,7 +78,7 @@ function Dashboard() {
     if (isDemo || !roadmap._id) return;
     setRoadmap((prev) => ({ ...prev, ...updatedContent }));
     try {
-      await fetch("http://localhost:8000/api/roadmap/update", {
+      await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/update", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,7 +102,7 @@ function Dashboard() {
     setIsDemo(false);
 
     try {
-      const res = await fetch("http://localhost:8000/api/roadmap/generate", {
+      const res = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -110,7 +110,7 @@ function Dashboard() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
 
-      const saveRes = await fetch("http://localhost:8000/api/roadmap/save", {
+      const saveRes = await fetch("https://genius-plan-ai-server.onrender.com/api/roadmap/save", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -142,17 +142,17 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center font-sans bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-500 overflow-x-hidden">
-      <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none">
+    <div className="flex flex-col items-center min-h-screen overflow-x-hidden font-sans transition-colors duration-500 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white">
+      <div className="fixed inset-0 w-full h-full pointer-events-none -z-10">
         <div className="absolute inset-0 bg-grid-black/[0.05] dark:bg-grid-white/[0.05]" />
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-300 dark:bg-cyan-600 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
+        <div className="absolute top-0 bg-purple-300 rounded-full -left-4 w-72 h-72 dark:bg-purple-600 mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob" />
+        <div className="absolute top-0 rounded-full -right-4 w-72 h-72 bg-cyan-300 dark:bg-cyan-600 mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000" />
       </div>
 
-      <div className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/70 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 transition-all">
-        <div className="w-full max-w-7xl mx-auto flex justify-between items-center py-4 px-4 sm:px-6 lg:px-8">
+      <div className="sticky top-0 z-50 w-full transition-all border-b backdrop-blur-md bg-white/70 dark:bg-slate-950/70 border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-between w-full px-4 py-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div
-            className="text-xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80"
+            className="flex items-center gap-2 text-xl font-bold cursor-pointer hover:opacity-80"
             onClick={() => window.location.reload()}
           >
             <span className="text-2xl">✨</span>
@@ -168,7 +168,7 @@ function Dashboard() {
             </SignedIn>
             <SignedOut>
               <SignInButton mode="modal">
-                <Button variant="default" className="bg-cyan-600 text-white">
+                <Button variant="default" className="text-white bg-cyan-600">
                   Sign In
                 </Button>
               </SignInButton>
@@ -177,16 +177,16 @@ function Dashboard() {
         </div>
       </div>
 
-      <main className="w-full flex flex-col items-center">
+      <main className="flex flex-col items-center w-full">
         <SignedOut>
           <HeroSection isSignedIn={false} onViewDemo={handleViewDemo} />
           {isDemo && roadmap && (
             <div
               id="roadmap-section"
-              className="w-full max-w-4xl px-4 py-12 animate-in fade-in zoom-in-95 duration-500"
+              className="w-full max-w-4xl px-4 py-12 duration-500 animate-in fade-in zoom-in-95"
             >
-              <div className="text-center mb-8 p-6 bg-cyan-50 dark:bg-cyan-900/10 border border-cyan-200 rounded-2xl">
-                <p className="text-cyan-800 dark:text-cyan-200 font-bold">
+              <div className="p-6 mb-8 text-center border bg-cyan-50 dark:bg-cyan-900/10 border-cyan-200 rounded-2xl">
+                <p className="font-bold text-cyan-800 dark:text-cyan-200">
                   Demo Mode
                 </p>
               </div>
@@ -207,13 +207,13 @@ function Dashboard() {
             className="w-full max-w-4xl px-4 py-20 scroll-mt-24"
           >
             {!isDemo && (
-              <div className="text-center mb-10 animate-in fade-in slide-in-from-bottom-5">
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <div className="mb-10 text-center animate-in fade-in slide-in-from-bottom-5">
+                <h2 className="mb-4 text-3xl font-bold md:text-4xl text-slate-900 dark:text-white">
                   Create Your Path
                 </h2>
                 <p className="text-slate-600 dark:text-slate-400">
                   Welcome,{" "}
-                  <span className="text-cyan-600 dark:text-cyan-400 font-bold">
+                  <span className="font-bold text-cyan-600 dark:text-cyan-400">
                     {user?.firstName}
                   </span>
                   .
@@ -228,7 +228,7 @@ function Dashboard() {
             )}
 
             {error && (
-              <div className="mt-6 p-4 bg-red-100 text-red-500 rounded-lg text-center">
+              <div className="p-4 mt-6 text-center text-red-500 bg-red-100 rounded-lg">
                 {error}
               </div>
             )}
@@ -236,10 +236,10 @@ function Dashboard() {
             {!showForm && roadmap && (
               <div
                 id="roadmap-section"
-                className="animate-in fade-in zoom-in-95 duration-500 mt-10 scroll-mt-28"
+                className="mt-10 duration-500 animate-in fade-in zoom-in-95 scroll-mt-28"
               >
                 {isDemo && (
-                  <div className="mb-6 p-4 bg-yellow-100 text-yellow-800 text-center rounded-lg">
+                  <div className="p-4 mb-6 text-center text-yellow-800 bg-yellow-100 rounded-lg">
                     Demo Mode.
                   </div>
                 )}
@@ -248,7 +248,7 @@ function Dashboard() {
                   variant="ghost"
                   className="mb-6 text-slate-500 hover:text-cyan-600 group"
                 >
-                  <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition-transform" />{" "}
+                  <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />{" "}
                   Create New
                 </Button>
                 <RoadmapDisplay data={roadmap} onUpdate={handleUpdateRoadmap} />
@@ -258,7 +258,7 @@ function Dashboard() {
         </SignedIn>
       </main>
 
-      <footer className="w-full py-8 mt-auto border-t border-slate-200 dark:border-slate-800 text-center text-slate-500 text-sm bg-white dark:bg-slate-950">
+      <footer className="w-full py-8 mt-auto text-sm text-center bg-white border-t border-slate-200 dark:border-slate-800 text-slate-500 dark:bg-slate-950">
         <p>© 2024 GeniusPlan AI.</p>
       </footer>
     </div>

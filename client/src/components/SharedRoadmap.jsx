@@ -14,7 +14,7 @@ const SharedRoadmap = () => {
     const fetchRoadmap = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/roadmap/public/${id}`
+          `https://genius-plan-ai-server.onrender.com/api/roadmap/public/${id}`
         );
         if (!res.ok) throw new Error("Roadmap not found");
         const data = await res.json();
@@ -35,13 +35,13 @@ const SharedRoadmap = () => {
 
   if (loading)
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center h-screen">
         <Loader2 className="w-8 h-8 animate-spin text-cyan-500" />
       </div>
     );
   if (error)
     return (
-      <div className="h-screen flex flex-col items-center justify-center text-red-500">
+      <div className="flex flex-col items-center justify-center h-screen text-red-500">
         <p>{error}</p>
         <Link to="/">
           <Button variant="link">Go Home</Button>
@@ -50,15 +50,15 @@ const SharedRoadmap = () => {
     );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8">
+    <div className="min-h-screen p-4 bg-slate-50 dark:bg-slate-950 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex items-center justify-between mb-8">
           <Link to="/">
             <Button variant="ghost" className="gap-2">
               <ArrowLeft className="w-4 h-4" /> GeniusPlan AI
             </Button>
           </Link>
-          <div className="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-bold uppercase">
+          <div className="px-3 py-1 text-xs font-bold uppercase rounded-full bg-cyan-100 text-cyan-700">
             Read Only View
           </div>
         </div>

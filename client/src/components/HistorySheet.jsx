@@ -30,7 +30,7 @@ const HistorySheet = ({ onLoadRoadmap }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:8000/api/roadmap/user/${user.id}`
+        `https://genius-plan-ai-server.onrender.com/api/roadmap/user/${user.id}`
       );
       const data = await res.json();
       setHistory(data);
@@ -54,7 +54,7 @@ const HistorySheet = ({ onLoadRoadmap }) => {
           onClick={fetchHistory}
           className="bg-transparent border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400"
         >
-          <History className="mr-2 h-4 w-4" /> History
+          <History className="w-4 h-4 mr-2" /> History
         </Button>
       </SheetTrigger>
 
@@ -68,13 +68,13 @@ const HistorySheet = ({ onLoadRoadmap }) => {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="space-y-4 pb-10">
+        <div className="pb-10 space-y-4">
           {loading ? (
             <div className="flex justify-center py-10">
-              <Loader2 className="animate-spin text-cyan-500 w-8 h-8" />
+              <Loader2 className="w-8 h-8 animate-spin text-cyan-500" />
             </div>
           ) : history.length === 0 ? (
-            <p className="text-center text-slate-500 py-10 italic">
+            <p className="py-10 italic text-center text-slate-500">
               No saved roadmaps yet. Create one!
             </p>
           ) : (
@@ -82,10 +82,10 @@ const HistorySheet = ({ onLoadRoadmap }) => {
               <div
                 key={item._id}
                 onClick={() => handleClick(item)}
-                className="group p-4 border border-slate-200 dark:border-slate-800 rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 hover:shadow-md transition-all duration-200"
+                className="p-4 transition-all duration-200 border cursor-pointer group border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-900/40 hover:bg-white dark:hover:bg-slate-900 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 hover:shadow-md"
               >
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-bold text-base text-slate-800 dark:text-slate-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="text-base font-bold transition-colors text-slate-800 dark:text-slate-200 group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                     {item.topic}
                   </h4>
 
@@ -97,12 +97,12 @@ const HistorySheet = ({ onLoadRoadmap }) => {
                   </Badge>
                 </div>
 
-                <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2 leading-relaxed">
+                <p className="mb-3 text-sm leading-relaxed text-slate-500 dark:text-slate-400 line-clamp-2">
                   {item.description ||
                     "No description available for this roadmap."}
                 </p>
 
-                <div className="flex items-center gap-4 text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-800/50 pt-2 mt-2">
+                <div className="flex items-center gap-4 pt-2 mt-2 text-xs border-t text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-800/50">
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" /> {item.duration}
                   </span>
