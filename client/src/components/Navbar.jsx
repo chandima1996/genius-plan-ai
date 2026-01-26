@@ -27,7 +27,7 @@ const Navbar = ({ onLoadHistory }) => {
           to="/"
           className="text-xl font-bold flex items-center gap-2 cursor-pointer hover:opacity-80"
         >
-          <img src={'./logo.svg'} alt="logo-image" className="w-7 h-7" />
+          <img src="./logo.svg" alt="logo-image" className="w-7 h-7" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500">
             GeniusPlan.AI
           </span>
